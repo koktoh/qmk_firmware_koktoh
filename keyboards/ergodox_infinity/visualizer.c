@@ -32,12 +32,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "lcd_backlight_keyframes.h"
 #include "system/serial_link.h"
 #include "default_animations.h"
+#include "keymaps/koktoh/hibiki_visualizer/hibiki_lcd_keyframes.h"
 
 static const uint32_t logo_background_color = LCD_COLOR(0x00, 0x00, 0xFF);
-static const uint32_t initial_color = LCD_COLOR(0, 0, 0);
+static const uint32_t initial_color = LCD_COLOR(0, 0, 0xFF);
 
 static const uint32_t led_emulation_colors[4] = {
-    LCD_COLOR(0, 0, 0),
+    LCD_COLOR(130, 255, 87),
     LCD_COLOR(255, 255, 255),
     LCD_COLOR(84, 255, 255),
     LCD_COLOR(168, 255, 255),
@@ -73,14 +74,7 @@ _Static_assert(sizeof(visualizer_user_data_t) <= VISUALIZER_USER_DATA_SIZE,
 
 // Feel free to modify the animations below, or even add new ones if needed
 
-
-// The color animation animates the LCD color when you change layers
-static keyframe_animation_t one_led_color = {
-    .num_frames = 1,
-    .loop = false,
-    .frame_lengths = {gfxMillisecondsToTicks(0)},
-    .frame_functions = {lcd_backlight_keyframe_set_color},
-};
+static bool is_anime_started = false;
 
 bool swap_led_target_color(keyframe_animation_t* animation, visualizer_state_t* state) {
     uint32_t temp = next_led_target_color;
@@ -92,7 +86,7 @@ bool swap_led_target_color(keyframe_animation_t* animation, visualizer_state_t* 
 // The color animation animates the LCD color when you change layers
 static keyframe_animation_t two_led_colors = {
     .num_frames = 2,
-    .loop = true,
+    .loop = false,
     .frame_lengths = {gfxMillisecondsToTicks(1000), gfxMillisecondsToTicks(0)},
     .frame_functions = {lcd_backlight_keyframe_set_color, swap_led_target_color},
 };
@@ -100,26 +94,20 @@ static keyframe_animation_t two_led_colors = {
 // The LCD animation alternates between the layer name display and a
 // bitmap that displays all active layers
 static keyframe_animation_t lcd_bitmap_animation = {
-    .num_frames = 1,
-    .loop = false,
-    .frame_lengths = {gfxMillisecondsToTicks(0)},
-    .frame_functions = {lcd_keyframe_display_layer_bitmap},
-};
-
-static keyframe_animation_t lcd_bitmap_leds_animation = {
-    .num_frames = 2,
+    .num_frames = 20,
     .loop = true,
-    .frame_lengths = {gfxMillisecondsToTicks(2000), gfxMillisecondsToTicks(2000)},
-    .frame_functions = {lcd_keyframe_display_layer_bitmap, lcd_keyframe_display_led_states},
+    .frame_lengths = {gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200)},
+    .frame_functions = {lcd_keyframe_draw_hibiki_0, lcd_keyframe_draw_hibiki_1, lcd_keyframe_draw_hibiki_2, lcd_keyframe_draw_hibiki_3, lcd_keyframe_draw_hibiki_4, lcd_keyframe_draw_hibiki_5, lcd_keyframe_draw_hibiki_6, lcd_keyframe_draw_hibiki_7, lcd_keyframe_draw_hibiki_8, lcd_keyframe_draw_hibiki_9, lcd_keyframe_draw_hibiki_10, lcd_keyframe_draw_hibiki_11, lcd_keyframe_draw_hibiki_12, lcd_keyframe_draw_hibiki_13, lcd_keyframe_draw_hibiki_14, lcd_keyframe_draw_hibiki_15, lcd_keyframe_draw_hibiki_16, lcd_keyframe_draw_hibiki_17, lcd_keyframe_draw_hibiki_18, lcd_keyframe_draw_hibiki_19},
 };
 
 void initialize_user_visualizer(visualizer_state_t* state) {
     // The brightness will be dynamically adjustable in the future
     // But for now, change it here.
-    lcd_backlight_brightness(130);
+    lcd_backlight_brightness(LED_BRIGHTNESS_HI);
     state->current_lcd_color = initial_color;
     state->target_lcd_color = logo_background_color;
     lcd_state = LCD_STATE_INITIAL;
+    is_anime_started = false;
     start_keyframe_animation(&default_startup_animation);
 }
 
@@ -158,18 +146,6 @@ static uint8_t get_secondary_led_index(visualizer_user_data_t* user_data) {
     return 0;
 }
 
-static uint8_t get_brightness(visualizer_user_data_t* user_data, uint8_t index) {
-    switch (index) {
-    case 1:
-        return user_data->led1;
-    case 2:
-        return user_data->led2;
-    case 3:
-        return user_data->led3;
-    }
-    return 0;
-}
-
 static void update_emulated_leds(visualizer_state_t* state, visualizer_keyboard_status_t* prev_status) {
     visualizer_user_data_t* user_data_new = (visualizer_user_data_t*)state->status.user_data;
     visualizer_user_data_t* user_data_old = (visualizer_user_data_t*)prev_status->user_data;
@@ -188,61 +164,19 @@ static void update_emulated_leds(visualizer_state_t* state, visualizer_keyboard_
     uint8_t new_secondary_index = get_secondary_led_index(user_data_new);
     uint8_t old_secondary_index = get_secondary_led_index(user_data_old);
 
-    uint8_t old_brightness = get_brightness(user_data_old, old_index);
-    uint8_t new_brightness = get_brightness(user_data_new, new_index);
-
-    uint8_t old_secondary_brightness = get_brightness(user_data_old, old_secondary_index);
-    uint8_t new_secondary_brightness = get_brightness(user_data_new, new_secondary_index);
-
     if (lcd_state == LCD_STATE_INITIAL ||
             new_index != old_index ||
-            new_secondary_index != old_secondary_index ||
-            new_brightness != old_brightness ||
-            new_secondary_brightness != old_secondary_brightness) {
+            new_secondary_index != old_secondary_index) {
 
-        if (new_secondary_index != 0) {
-            state->target_lcd_color = change_lcd_color_intensity(
-                led_emulation_colors[new_index], new_brightness);
-            next_led_target_color = change_lcd_color_intensity(
-                led_emulation_colors[new_secondary_index], new_secondary_brightness);
+        state->target_lcd_color = change_lcd_color_intensity(
+            led_emulation_colors[new_index], LED_BRIGHTNESS_HI);
+        next_led_target_color = change_lcd_color_intensity(
+            led_emulation_colors[new_secondary_index], LED_BRIGHTNESS_HI);
 
-            stop_keyframe_animation(&one_led_color);
-            start_keyframe_animation(&two_led_colors);
-        } else {
-            state->target_lcd_color = change_lcd_color_intensity(
-                led_emulation_colors[new_index], new_brightness);
-            stop_keyframe_animation(&two_led_colors);
-            start_keyframe_animation(&one_led_color);
-        }
-    }
-}
+        lcd_state = LCD_STATE_BITMAP_AND_LEDS;
 
-static void update_lcd_text(visualizer_state_t* state, visualizer_keyboard_status_t* prev_status) {
-    if (state->status.leds) {
-        if (lcd_state != LCD_STATE_BITMAP_AND_LEDS ||
-                state->status.leds != prev_status->leds ||
-                state->status.layer != prev_status->layer ||
-                state->status.default_layer != prev_status->default_layer) {
-
-            // NOTE: that it doesn't matter if the animation isn't playing, stop will do nothing in that case
-            stop_keyframe_animation(&lcd_bitmap_animation);
-
-            lcd_state = LCD_STATE_BITMAP_AND_LEDS;
-            // For information:
-            // The logic in this function makes sure that this doesn't happen, but if you call start on an
-            // animation that is already playing it will be restarted.
-            start_keyframe_animation(&lcd_bitmap_leds_animation);
-        }
-    } else {
-        if (lcd_state != LCD_STATE_LAYER_BITMAP ||
-                state->status.layer != prev_status->layer ||
-                state->status.default_layer != prev_status->default_layer) {
-
-            stop_keyframe_animation(&lcd_bitmap_leds_animation);
-
-            lcd_state = LCD_STATE_LAYER_BITMAP;
-            start_keyframe_animation(&lcd_bitmap_animation);
-        }
+        stop_keyframe_animation(&two_led_colors);
+        start_keyframe_animation(&two_led_colors);
     }
 }
 
@@ -255,9 +189,11 @@ void update_user_visualizer_state(visualizer_state_t* state, visualizer_keyboard
     // This is also important because the slave won't have access to the active layer for example outside the
     // status.
 
+    if(is_anime_started == false) {
+        start_keyframe_animation(&lcd_bitmap_animation);
+        is_anime_started = true;
+    }
     update_emulated_leds(state, prev_status);
-    update_lcd_text(state, prev_status);
-
 }
 
 void user_visualizer_suspend(visualizer_state_t* state) {
@@ -272,6 +208,7 @@ void user_visualizer_resume(visualizer_state_t* state) {
     state->current_lcd_color = initial_color;
     state->target_lcd_color = logo_background_color;
     lcd_state = LCD_STATE_INITIAL;
+    is_anime_started = false;
     start_keyframe_animation(&default_startup_animation);
 }
 
