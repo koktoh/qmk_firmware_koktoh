@@ -1,0 +1,31 @@
+{
+    "keyboard_name": "test_keyboard",
+    "url": "",
+    "maintainer": "koktoh",
+    "width": 3,
+    "height": 6,
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"label":"l00", "x":0, "y":0},
+                {"label":"l01", "x":1, "y":0},
+                {"label":"l02", "x":2, "y":0},
+                {"label":"l10", "x":0, "y":1},
+                {"label":"l11", "x":1, "y":1},
+                {"label":"l12", "x":2, "y":1},
+                {"label":"l20", "x":0, "y":2},
+                {"label":"l21", "x":1, "y":2},
+                {"label":"l22", "x":2, "y":2},
+                {"label":"r00", "x":0, "y":3},
+                {"label":"r01", "x":1, "y":3},
+                {"label":"r02", "x":2, "y":3},
+                {"label":"r10", "x":0, "y":4},
+                {"label":"r11", "x":1, "y":4},
+                {"label":"r12", "x":2, "y":4},
+                {"label":"r20", "x":0, "y":5},
+                {"label":"r21", "x":1, "y":5},
+                {"label":"r22", "x":2, "y":5}
+            ]
+        }
+    }
+}
