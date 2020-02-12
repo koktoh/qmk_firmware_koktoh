@@ -64,7 +64,7 @@ void draw_emulator(void);
 #endif
 
 // If you need support for more than 16 keyframes per animation, you can change this
-#define MAX_VISUALIZER_KEY_FRAMES 16
+#define MAX_VISUALIZER_KEY_FRAMES 32
 
 struct keyframe_animation_t;
 

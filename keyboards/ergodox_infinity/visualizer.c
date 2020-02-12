@@ -33,6 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "system/serial_link.h"
 #include "default_animations.h"
 
+#include "visualizer/key_frames/pacman_key_frames.h"
+
 static const uint32_t logo_background_color = LCD_COLOR(0x00, 0x00, 0xFF);
 static const uint32_t initial_color = LCD_COLOR(0, 0, 0);
 
@@ -100,10 +102,10 @@ static keyframe_animation_t two_led_colors = {
 // The LCD animation alternates between the layer name display and a
 // bitmap that displays all active layers
 static keyframe_animation_t lcd_bitmap_animation = {
-    .num_frames = 1,
-    .loop = false,
-    .frame_lengths = {gfxMillisecondsToTicks(0)},
-    .frame_functions = {lcd_keyframe_display_layer_bitmap},
+    .num_frames = 28,
+    .loop = true,
+    .frame_lengths = { gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200), gfxMillisecondsToTicks(200) },
+    .frame_functions = { lcd_keyframe_draw_pacman_00, lcd_keyframe_draw_pacman_01, lcd_keyframe_draw_pacman_02, lcd_keyframe_draw_pacman_03, lcd_keyframe_draw_pacman_04, lcd_keyframe_draw_pacman_05, lcd_keyframe_draw_pacman_06, lcd_keyframe_draw_pacman_07, lcd_keyframe_draw_pacman_08, lcd_keyframe_draw_pacman_09, lcd_keyframe_draw_pacman_10, lcd_keyframe_draw_pacman_11, lcd_keyframe_draw_pacman_12, lcd_keyframe_draw_pacman_13, lcd_keyframe_draw_pacman_14, lcd_keyframe_draw_pacman_15, lcd_keyframe_draw_pacman_16, lcd_keyframe_draw_pacman_17, lcd_keyframe_draw_pacman_18, lcd_keyframe_draw_pacman_19, lcd_keyframe_draw_pacman_20, lcd_keyframe_draw_pacman_21, lcd_keyframe_draw_pacman_22, lcd_keyframe_draw_pacman_23, lcd_keyframe_draw_pacman_24, lcd_keyframe_draw_pacman_25, lcd_keyframe_draw_pacman_26, lcd_keyframe_draw_pacman_27 },
 };
 
 static keyframe_animation_t lcd_bitmap_leds_animation = {

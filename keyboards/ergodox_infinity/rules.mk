@@ -1,6 +1,15 @@
 # MCU name
 MCU = MK20DX256
 
+## chip/board settings
+# - the next two should match the directories in
+#   <chibios>/os/hal/ports/$(MCU_FAMILY)/$(MCU_SERIES)
+# - For Teensies, FAMILY = KINETIS and SERIES is either
+#   KL2x (LC) or K20x (3.0,3.1,3.2).
+# - For Infinity KB, SERIES = K20x
+MCU_FAMILY = KINETIS
+MCU_SERIES = K20x
+
 # Linker script to use
 # - it should exist either in <chibios>/os/common/ports/ARMCMx/compilers/GCC/ld/
 #   or <this_dir>/ld/
@@ -57,7 +66,9 @@ LED_WIDTH = 7
 LED_HEIGHT = 7
 
 # project specific files
-SRC = matrix.c \
-      led.c
+SRC =	matrix.c \
+    led.c \
+    visualizer/bmps/pacman_bmps.c \
+    visualizer/key_frames/pacman_key_frames.c
 
 LAYOUTS = ergodox
