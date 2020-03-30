@@ -43,12 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #define MATRIX_ROW_PINS { F4, F5, F6, F7 }
 #define MATRIX_COL_PINS { B1, B3, B2 }
-#define MATRIX_ROW_PINS_RIGHT { F5, F6, F7, F4 }
-#define MATRIX_COL_PINS_RIGHT { B2, B1, B3 }
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL*/
-#define DIODE_DIRECTION COL2ROW
+// #define DIODE_DIRECTION CUSTOM_MATRIX
 
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
