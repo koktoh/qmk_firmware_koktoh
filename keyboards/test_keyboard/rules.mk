@@ -43,5 +43,7 @@ FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
 HD44780_ENABLE = no         # Enable support for HD44780 based LCDs
 
 CUSTOM_MATRIX = yes
+POINTING_DEVICE_ENABLE = yes
 
-SRC += matrix.c
+SRC += matrix.c \
+paw3204.c
