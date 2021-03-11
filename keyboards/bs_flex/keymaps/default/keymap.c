@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "quantum/rgblight_list.h"
+#include "rgblight_list.h"
 #include "jtu_custom_keycodes.h"
 #include "keymap_jp.h"
 
@@ -227,18 +227,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
-
-
-/*
-void matrix_init_user(void) {
-
-}
-
-void matrix_scan_user(void) {
-
-}
-
-bool led_update_user(led_t led_state) {
-    return true;
-}
-*/
