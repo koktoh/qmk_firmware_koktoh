@@ -33,6 +33,7 @@ HD44780_ENABLE = no         # Enable support for HD44780 based LCDs
 
 SPLIT_KEYBOARD = yes
 CUSTOM_MATRIX = yes
+LTO_ENABLE = yes
 
 SRC += matrix.c \
     jtu_custom_keycodes.c
