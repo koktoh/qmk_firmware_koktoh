@@ -6,8 +6,8 @@
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID    0xFEED
-#define PRODUCT_ID   0x0000
+#define VENDOR_ID    0x5653
+#define PRODUCT_ID   0x0001
 #define DEVICE_VER   0x0001
 #define MANUFACTURER koktoh
 #define PRODUCT      dear_creators
@@ -15,6 +15,9 @@
 #define EE_HANDS
 #define SPLIT_LAYER_STATE_ENABLE
 #define OLED_FONT_H "keyboards/dear_creators/common/glcdfont.c"
+
+/* VIA */
+#define DYNAMIC_KEYMAP_LAYER_COUNT 3
 
 /* key matrix size */
 #define MATRIX_ROWS 16
