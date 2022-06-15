@@ -33,12 +33,14 @@
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
  */
-#define MATRIX_ROW_PINS { F4, F5, F6, NO_PIN }
-#define MATRIX_COL_PINS { B4, B5, E6, D7, C6, D4 }
+#define MATRIX_ROW_PINS { B0, B1, B2, NO_PIN }
+#define MATRIX_COL_PINS { C7, C6, B5, B4, D7, D6 }
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
+
+#define SPLIT_HAND_PIN B7
 
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
@@ -50,8 +52,8 @@
 #define ENCODERS_RIGHT 2
 #define ENCODERS (ENCODERS_LEFT + ENCODERS_RIGHT)
 
-#define ENCODERS_PAD_A { F7, B3 }
-#define ENCODERS_PAD_B { B1, B2 }
+#define ENCODERS_PAD_A { F5, F1 }
+#define ENCODERS_PAD_B { F4, F0 }
 
 #define ENCODERS_CCW_KEY { { 2, 3 }, { 0, 3 }, { 0, 11 }, { 2, 11 } }
 #define ENCODERS_CW_KEY { { 3, 3 }, { 1, 3 }, { 1, 11 }, { 3, 11 } }
