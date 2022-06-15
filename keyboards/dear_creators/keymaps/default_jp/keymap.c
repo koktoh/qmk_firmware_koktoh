@@ -46,9 +46,9 @@ void keyboard_post_init_user() {
     backlight_enable();
     backlight_level(BACKLIGHT_LEVELS);
 #endif
-#ifdef RGBLIGHT_ENABLE
-    rgblight_mode(RGBLIGHT_MODE_RAINBOW_MOOD);
-#endif
+// #ifdef RGBLIGHT_ENABLE
+//     rgblight_mode(RGBLIGHT_MODE_RAINBOW_MOOD);
+// #endif
 }
 
 #ifdef OLED_ENABLE
