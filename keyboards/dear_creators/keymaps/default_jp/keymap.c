@@ -45,16 +45,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-void keyboard_post_init_user() {
-#ifdef BACKLIGHT_ENABLE
-    backlight_enable();
-    backlight_level(BACKLIGHT_LEVELS);
-#endif
-// #ifdef RGBLIGHT_ENABLE
-//     rgblight_mode(RGBLIGHT_MODE_RAINBOW_MOOD);
-// #endif
-}
-
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
 
