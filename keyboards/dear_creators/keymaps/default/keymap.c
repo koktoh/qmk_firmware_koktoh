@@ -4,6 +4,10 @@
 #include QMK_KEYBOARD_H
 #include "dear_creators.h"
 
+#ifdef OLED_ENABLE
+#include "../../util/oled_helper.h"
+#endif
+
 #define CTL_WU LCTL(KC_WH_U)
 #define CTL_WD LCTL(KC_WH_D)
 #define SFT_WU LSFT(KC_WH_U)
@@ -53,11 +57,6 @@ void keyboard_post_init_user() {
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
 
-void render_logo(void)
-{
-    oled_write_P(vs_logo, false);
-}
-
 bool oled_task_user(void) {
     uint8_t current_layer = get_highest_layer(layer_state);
 
@@ -68,9 +67,8 @@ bool oled_task_user(void) {
     oled_set_cursor(0, 7);
 
     oled_write_P(PSTR("Layer"), false);
-    oled_write_P(PSTR("  0  "), current_layer == 0);
-    oled_write_P(PSTR("  1  "), current_layer == 1);
-    oled_write_P(PSTR("  2  "), current_layer == 2);
+
+    render_layer_state(current_layer, 0, OLED_FONT_HEIGHT * 8 + 4);
 
     return false;
 }

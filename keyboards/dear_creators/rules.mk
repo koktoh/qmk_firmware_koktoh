@@ -29,4 +29,5 @@ CUSTOM_MATRIX = yes
 LTO_ENABLE = yes
 
 SRC += matrix.c \
-       ./util/encoder_action.c
+       ./util/encoder_action.c \
+	   ./util/oled_helper.c
