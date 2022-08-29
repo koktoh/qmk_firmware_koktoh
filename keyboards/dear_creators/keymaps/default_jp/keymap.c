@@ -3,7 +3,7 @@
 
 #include QMK_KEYBOARD_H
 #include "dear_creators.h"
-#include "keymap_jp.h"
+#include "keymap_japanese.h"
 
 #ifdef OLED_ENABLE
 #include "../../util/oled_helper.h"
