@@ -12,15 +12,13 @@
 #define MANUFACTURER koktoh
 #define PRODUCT      dear_creators
 
-#define EE_HANDS
-#define SPLIT_LAYER_STATE_ENABLE
 #define OLED_FONT_H "keyboards/dear_creators/common/glcdfont.c"
 
 /* VIA */
-#define DYNAMIC_KEYMAP_LAYER_COUNT 3
+#define DYNAMIC_KEYMAP_LAYER_COUNT 20
 
 /* key matrix size */
-#define MATRIX_ROWS 16
+#define MATRIX_ROWS 14
 #define MATRIX_COLS 6
 
 /*
@@ -33,30 +31,32 @@
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
  */
-#define MATRIX_ROW_PINS { B0, B1, B2, NO_PIN }
-#define MATRIX_COL_PINS { C7, C6, B5, B4, D7, D6 }
-#define UNUSED_PINS
+#define MATRIX_ROW_PINS { GP4, GP5, GP6, GP7, GP8, GP9, NO_PIN }
+#define MATRIX_COL_PINS { GP10, GP11, GP14, GP15, GP16, GP17 }
 
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
-#define SPLIT_HAND_PIN B7
-
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
  */
-#define SOFT_SERIAL_PIN D3  // or D1, D2, D3, E6
+#define SPLIT_HAND_PIN GP0
+// data sync
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_OLED_ENABLE
+#define RPC_M2S_BUFFER_SIZE 64
+#define RPC_S2M_BUFFER_SIZE 64
 
 /* Encoder */
 #define ENCODERS_LEFT 2
 #define ENCODERS_RIGHT 2
 #define ENCODERS (ENCODERS_LEFT + ENCODERS_RIGHT)
 
-#define ENCODERS_PAD_A { F5, F1 }
-#define ENCODERS_PAD_B { F4, F0 }
+#define ENCODERS_PAD_A { GP18, GP20 }
+#define ENCODERS_PAD_B { GP19, GP21 }
 
-#define ENCODERS_CCW_KEY { { 2, 3 }, { 0, 3 }, { 0, 11 }, { 2, 11 } }
-#define ENCODERS_CW_KEY { { 3, 3 }, { 1, 3 }, { 1, 11 }, { 3, 11 } }
+#define ENCODERS_CCW_KEY { { 2, 6 }, { 0, 6 }, { 0, 13 }, { 2, 13 } }
+#define ENCODERS_CW_KEY { { 3, 6 }, { 1, 6 }, { 1, 13 }, { 3, 13 } }
 
 /* Backlight */
 #ifdef BACKLIGHT_ENABLE
@@ -66,7 +66,8 @@
 #endif
 
 /* RGB Lighting */
-#define RGB_DI_PIN D2
+#define WS2812_PIO_USE_PIO1
+#define RGB_DI_PIN GP22
 
 #ifdef RGBLIGHT_ENABLE
 #    define RGBLED_NUM 76
@@ -79,18 +80,18 @@
 /*== all animations enable ==*/
 //#    define RGBLIGHT_ANIMATIONS
 /*== or choose animations ==*/
-// #    define RGBLIGHT_EFFECT_BREATHING
+#    define RGBLIGHT_EFFECT_BREATHING
 #    define RGBLIGHT_EFFECT_RAINBOW_MOOD
 #    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-//#    define RGBLIGHT_EFFECT_SNAKE
-//#    define RGBLIGHT_EFFECT_KNIGHT
-//#    define RGBLIGHT_EFFECT_CHRISTMAS
+#    define RGBLIGHT_EFFECT_SNAKE
+#    define RGBLIGHT_EFFECT_KNIGHT
+#    define RGBLIGHT_EFFECT_CHRISTMAS
 #    define RGBLIGHT_EFFECT_STATIC_GRADIENT
-//#    define RGBLIGHT_EFFECT_RGB_TEST
-//#    define RGBLIGHT_EFFECT_ALTERNATING
+// #    define RGBLIGHT_EFFECT_RGB_TEST
+#    define RGBLIGHT_EFFECT_ALTERNATING
 /*== customize breathing effect ==*/
 /*==== (DEFAULT) use fixed table instead of exp() and sin() ====*/
-#    define RGBLIGHT_BREATHE_TABLE_SIZE 128      // 256(default) or 128 or 64
+#    define RGBLIGHT_BREATHE_TABLE_SIZE 256      // 256(default) or 128 or 64
 /*==== use exp() and sin() ====*/
 //#    define RGBLIGHT_EFFECT_BREATHE_CENTER 1.85  // 1 to 2.7
 //#    define RGBLIGHT_EFFECT_BREATHE_MAX    255   // 0 to 255
@@ -150,8 +151,8 @@
 //#define NO_ACTION_ONESHOT
 
 /* disable these deprecated features by default */
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
+//#define NO_ACTION_MACRO
+//#define NO_ACTION_FUNCTION
 
 /* Bootmagic Lite key configuration */
 //#define BOOTMAGIC_LITE_ROW 0
